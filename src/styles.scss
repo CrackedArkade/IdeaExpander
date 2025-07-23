@@ -1,1 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
+button[disabled] {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+body {
+  font-family: 'Roboto', 'Lato', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #fdfbd4;
+  color: #222;
+}
+.section-title {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 1.8rem;
+}
+
+.subtext {
+  text-align: center;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  color: #666;
+}

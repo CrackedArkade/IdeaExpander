@@ -1,0 +1,108 @@
+<!-- ✅ Loading indicator -->
+<div *ngIf="loading" class="loading-message">Loading ideas...</div>
+
+<!-- ✅ Show message when no ideas -->
+<div *ngIf="!loading && ideas.length === 0" class="empty-message">
+  No ideas yet.
+</div>
+
+<!-- ✅ Grid of idea cards -->
+<div *ngIf="!loading && ideas.length > 0" class="idea-grid">
+  <div *ngFor="let idea of ideas" class="idea-card">
+    <h3>{{ idea.title }}</h3>
+    <p class="content-preview">{{ getPreview(idea.content) }}</p>
+
+    <div class="button-row">
+      <button (click)="openIdea(idea)">Open Idea</button>
+      <button class="danger" (click)="confirmDelete(idea)">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- 🌟 Fullscreen Expanded View -->
+<div *ngIf="expandedIdea && !isSummarizing" class="modal-backdrop">
+  <div class="modal expanded-modal">
+    <h2>{{ expandedIdea.title }}</h2>
+
+    <!-- 🧠 Side-by-side: Content and Summary -->
+    <div class="idea-details">
+      <div class="original-content">
+        <h4>📝 Your Content</h4>
+        <p>{{ expandedIdea.content }}</p>
+      </div>
+
+      <div class="ai-summary" *ngIf="expandedIdea.expandedContent">
+        <h4>📌 AI Summary</h4>
+        <p>{{ expandedIdea.expandedContent }}</p>
+      </div>
+    </div>
+
+    <!-- 💡 Action Buttons -->
+    <div class="modal-actions">
+      <button (click)="closeIdea()">🔙 Close</button>
+      <button (click)="startExpansion()" [disabled]="expanding">🧠 Expand Idea</button>
+      <button (click)="editing = true">✏️ Edit Idea</button>
+      <button class="danger" (click)="confirmDelete(expandedIdea)">🗑 Delete Idea</button>
+    </div>
+
+    <!-- 💬 AI Chat -->
+    <div #chatContainer class="chat-thread" *ngIf="chatMessages.length > 0">
+      <div *ngFor="let msg of chatMessages" class="chat-bubble" [ngClass]="msg.sender">
+        <strong *ngIf="msg.sender === 'ai'">AI:</strong>
+        <strong *ngIf="msg.sender === 'user'">You:</strong>
+        <span>{{ msg.content }}</span>
+      </div>
+    </div>
+
+    <!-- ⏳ Loading Indicator -->
+    <div *ngIf="expanding" class="thinking">
+      🤔 Thinking...
+    </div>
+
+    <!-- 🧠 Chat Input -->
+    <div class="chat-input-row">
+      <input
+        type="text"
+        [(ngModel)]="chatInput"
+        (keyup.enter)="sendUserMessage()"
+        [disabled]="expanding"
+        placeholder="Write a message or ask AI to elaborate..."
+      />
+      <button (click)="sendUserMessage()" [disabled]="expanding || !chatInput.trim()">Send</button>
+    </div>
+
+    <!-- ✏️ Edit Section -->
+    <div *ngIf="editing" class="edit-block">
+      <label>Title:</label>
+      <input [(ngModel)]="editedTitle" />
+
+      <label style="margin-top: 1rem;">Content:</label>
+      <textarea rows="6" [(ngModel)]="editedContent"></textarea>
+
+      <div class="modal-actions" style="margin-top: 1rem;">
+        <button (click)="saveEdits()" [disabled]="savingEdit">
+          {{ savingEdit ? 'Saving...' : 'Save Changes' }}
+        </button>
+        <button (click)="cancelEdit()" [disabled]="savingEdit">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ❓ Confirmation Modal -->
+<div *ngIf="ideaToDelete" class="modal-backdrop">
+  <div class="modal">
+    <p>Are you sure you want to delete "{{ ideaToDelete.title }}"?</p>
+    <div class="modal-actions">
+      <button (click)="deleteIdea(ideaToDelete)">Yes, Delete</button>
+      <button (click)="ideaToDelete = null">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- 🔄 Loading screen while summarizing -->
+<div *ngIf="isSummarizing" class="modal-backdrop loading-backdrop">
+  <div class="modal loading-modal">
+    <p>🧠 Generating AI Summary... Please wait</p>
+  </div>
+</div>

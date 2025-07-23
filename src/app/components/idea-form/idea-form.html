@@ -1,0 +1,37 @@
+<div class="form-container">
+  <!-- Main Title -->
+  <h1 class="main-title">🧠 My Idea Journal</h1>
+  <p class="subtext">
+    Jot down your thoughts, ideas, or inventions. Later, we'll help you expand them with AI.
+  </p>
+
+  <!-- Title Input -->
+  <label for="title">What's your next <b>big thing?</b></label>
+  <input
+    id="title"
+    [(ngModel)]="title"
+    placeholder="Name your idea here. It can be anything, just name it here and type away below!"
+    class="title-input"
+  />
+
+  <div class="gap"></div>
+
+  <!-- Content Textarea -->
+  <label for="content">So, what are the specifics?</label>
+  <textarea
+    id="content"
+    [(ngModel)]="content"
+    placeholder="Your actual idea. Give as much content as you can, it'll help you remember more about it in the future, and in addition, the more content you give, the better we can expand the idea!"
+    class="content-input"
+    rows="6"
+  ></textarea>
+
+  <!-- Save Button -->
+  <button
+    (click)="submitIdea()"
+    [disabled]="!title.trim() || !content.trim() || saving"
+  >
+    {{ saving ? 'Saving...' : 'Save Idea' }}
+  </button>
+</div>
+

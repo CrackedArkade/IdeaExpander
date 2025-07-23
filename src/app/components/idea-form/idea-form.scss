@@ -1,0 +1,61 @@
+.form-container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: left;
+}
+
+.main-title {
+  text-align: center;
+  margin-bottom: 0.5rem;
+  font-size: 2rem;
+}
+
+.subtext {
+  text-align: center;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  color: #666;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 500;
+}
+
+input.title-input,
+textarea.content-input {
+  width: 100%;
+  font-size: 1rem;
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  font-family: inherit;
+}
+
+textarea.content-input {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.gap {
+  height: 0.5rem;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
